@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="1000" height="500"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<script>
+
+var canvas = document.getElementById("myCanvas");
+
+var ctx = canvas.getContext("2d");
+
+function drawCharacter(hex, x, y) {
+	let dp =(0b10000000 & hex)>> 07;
+
+	let a =(0b01000000 & hex)>> 06;
+    let b =(0b00100000 & hex)>> 05;
+    let c =(0b00010000 & hex)>> 04;
+    let d =(0b00001000 & hex)>> 03;
+    let e =(0b00000100 & hex)>> 02;
+    let f =(0b00000010 & hex)>> 01;
+    let g =(0b00000001 & hex)>> 00;
+    
+    ctx.beginPath();
+    
+    console.log(a, b, c, d, e, f, g);
+        
+    if (a) {
+    	ctx.moveTo(x, y);
+        ctx.lineTo(x + 60, y);
+    }
+    
+    if (b) {
+    	ctx.moveTo(x + 60, y);
+        ctx.lineTo(x + 60, y + 60);
+    }
+    
+    if (c) {
+    	ctx.moveTo(x + 60, y + 60);
+        ctx.lineTo(x + 60, y + 120);
+    }
+    
+    if (d) {
+    	ctx.moveTo(x + 60, y + 120);
+        ctx.lineTo(x, y + 120);
+    }
+    
+    if (e) {
+    	ctx.moveTo(x, y + 120);
+        ctx.lineTo(x, y + 60);
+    }
+    
+    if (f) {
+    	ctx.moveTo(x, y + 60);
+        ctx.lineTo(x, y);
+    }
+    
+    if (g) {
+    	ctx.moveTo(x, y + 60);
+        ctx.lineTo(x + 60, y + 60);
+    }
+    
+    ctx.closePath();
+    ctx.stroke();
+    
+    if (dp) {
+     	ctx.beginPath();
+        ctx.arc(x + 080, y + 110, 10, 0, 2 * Math.PI);
+        ctx.stroke(); 
+    }
+    
+}
+
+const characters = {
+	"0": 0b01111110,
+	"1": 0b00110000,
+	"2": 0b01101101,
+	"3": 0b01111001,
+	"4": 0b00110011,
+	"5": 0b01011011,
+	"6": 0b01011111,
+	"7": 0b01110000,
+	"8": 0b01111111,
+	"9": 0b01111011,
+	"a": 0b00000000,
+	"b": 0b00000000,
+    
+}
+
+for (let x = 0; x < 10; x++) {
+	drawCharacter(characters["" + x], 20 + 80 * x, 40);
+}
+
+
+
+drawCharacter(0b01101101, 100, 200);
+
+drawCharacter(0b00110011, 20, 200);
+
+drawCharacter(0b10000000, 150, 120);
+drawCharacter(0b10001000, 250, 120);
+
+
+
+</script>
+
+</body>
+</html>
+
+
